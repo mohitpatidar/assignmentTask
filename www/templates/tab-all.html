@@ -1,0 +1,53 @@
+<ion-view view-title="All">
+   <ion-header-bar class="bar bar-header item-input-inset">
+    <label class="item-input-wrapper">
+      <input type="text" placeholder="Input item" ng-model="itemName">
+    </label>
+    <button class="button icon-left ion-plus button-positive" ng-click="addNewItem(itemName,1)">
+    </button>
+  </ion-header-bar>
+  <ion-content class="padding">
+  <div class="list card">  
+
+     <ion-list
+          show-delete="shouldShowDelete"
+          show-reorder="shouldShowReorder"
+          can-swipe="listCanSwipe"  sortable draggable=".item" sorted="onReorder($fromIndex, $toIndex)">
+           <!--<div ng-repeat="bucket in buckets">
+
+
+            &lt;!&ndash;the divider &ndash;&gt;
+           <ion-item class="item-divider homepage item-button-right">
+              <b>{{bucket.title}}</b>
+              <button class="button  button-positive" ng-click="addNewItem(itemName,bucket.id)">
+                 <i class="icon ion-plus"></i>
+              </button>
+          </ion-item>
+
+
+
+            <div ng-repeat="item in listItems track by $index">
+
+          &lt;!&ndash;the list &ndash;&gt;
+            <ion-item ng-if="item.bucketID==bucket.id">{{item.name}}</ion-item>
+          </div>
+            </div>-->
+
+
+         <div ng-repeat="row in mixList">
+             <ion-item ng-if="row.itemId == -1" class="item-divider homepage item-button-right">
+                 <b>{{row.bucketsIdTitle}}</b>
+                 <button class="button  button-positive" ng-click="addNewItem(itemName,row.bucketsId)">
+                     <i class="icon ion-plus"></i>
+                 </button>
+             </ion-item>
+
+             <ion-item ng-if="row.itemId !== -1 && row !== {}">{{row.itemName}}</ion-item>
+
+         </div>
+
+        </ion-list>  
+      
+  </div>   
+  </ion-content>
+</ion-view>
