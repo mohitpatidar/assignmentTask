@@ -21,16 +21,33 @@ angular.module('starter.controllers', [])
 
     $scope.onReorder = function($fromIndex, $toIndex){
     //implement permanent drag and drop logic here
+      var toData = $scope.mixList[$toIndex];
 
-        var toData = $scope.mixList[$toIndex];
+
+
+
+      if(toData.itemId === -1 && $toIndex > 0) {
+        if($toIndex > $fromIndex) {
+          toData = $scope.mixList[$toIndex + 1];
+        } else {
+          toData = $scope.mixList[$toIndex - 1];
+        }
+      }
+
+
         var fromData = $scope.mixList[$fromIndex];
+        console.log('fromData',JSON.stringify(fromData));
+        console.log('toData',JSON.stringify(toData));
+      console.log(fromData.itemId + ' ### ' + toData.bucketsId);
+
+        // {"bucketsId":1,"bucketsIdTitle":"Today","itemId":1,"itemName":"asa","$$hashKey":"object:12"}
 
         if(fromData.itemId === -1) {
             // nothing
         } else {
             if(toData.bucketsId === fromData.bucketsId) {
-                $scope.mixList[$fromIndex] = toData;
-                $scope.mixList[$toIndex] = fromData;
+              $scope.mixList[$fromIndex] = toData;
+              $scope.mixList[$toIndex] = fromData;
             } else {
                 temp = fromData;
                 temp.bucketsId = toData.bucketsId;
@@ -40,6 +57,10 @@ angular.module('starter.controllers', [])
                 $scope.mixList.clean(undefined);
                 // add
                 $scope.mixList.splice($toIndex, 0, temp);
+                // update storage
+              console.log(fromData.itemId + ' ### ' + toData.bucketsId);
+              All.updateItemById(fromData.itemId,toData.bucketsId)
+
             }
         }
     };
